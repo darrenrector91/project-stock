@@ -1,0 +1,158 @@
+<div ng-include="'views/partials/user.header.html'"></div>
+<div class="container">
+    <div class="backImage">
+        <div class="userBanner">
+            <div class="userBannerbox">
+                <div class="userBanner-text">
+                    <h1 class="h1User">fish. catch. itrack</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="userViewUsernameCity" md-no-flicker>
+        <h1 md-no-flicker class="username">{{vm.userObject.first_name}} {{vm.userObject.last_name}}</h1>
+        <h3 md-no-flicker class="cityInfo">{{vm.userObject.city}}, {{vm.userObject.state}}
+            <a ng-href="#!editUser" ng-mouseover="tooltip=true" ng-mouseleave="tooltip=false">
+                <image src="../images/icons/edit-pencil.svg"></image>
+                <div class="tooltip" ng-show="tooltip">Edit your user account information</div>
+            </a>
+        </h3>
+    </div>
+    <hr>
+    <md-content layout-padding class="catchForm" layout-align="center center">
+        <div class="fishForm" ng-cloak class="md-inline-form" ng-mouseenter="formMessage=true"
+            ng-mouseleave="formMessage=false" layout-align="center center" md-no-flicker>
+            <form layout-align="center center">
+                <!-- <div layout-gt-sm="row" layout-align="center center">
+                    <div class="formMessage" ng-show="formMessage">Fill out the form and upload an image then click Submit</div>
+                </div> -->
+                <div layout-gt-sm="row" layout-align="center center">
+
+                    <md-input-container>
+                        <label>Date</label>
+                        <md-datepicker ng-model="vm.newItem.date" name="dateField"></md-datepicker>
+                        <div ng-messages="myForm.dateField.$error">
+                            <div ng-message="valid">The entered value is not a date!</div>
+                            <div ng-message="required">This date is required!</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>City</label>
+                            <input name="city" ng-model="vm.newItem.event_city">
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>State</label>
+                            <input name="state" ng-model="vm.newItem.event_state" md-maxlength="2">
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row" layout-align="center center">
+                    <md-input-container>
+                        <label>Species</label>
+                        <input name="species" ng-model="vm.newItem.species">
+                        <div ng-messages="colorForm.species.$error">
+                            <div ng-message="required">This is required!</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>Rod</label>
+                            <input name="rod" ng-model="vm.newItem.rod">
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>Reel</label>
+                            <input name="reel" ng-model="vm.newItem.reel">
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>Tackle/Bait</label>
+                            <input name="tackle_bait" ng-model="vm.newItem.tackle_bait">
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <div>
+                            <label>Body of Water</label>
+                            <input name="body_of_water" ng-model="vm.newItem.body_of_water">
+                            <div ng-messages="fishForm.body_of_water.$error">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row" layout-align="center center" class="userFormBtn">
+                    <md-input-container>
+                        <md-button class="md-raised generalButton userInfoSubmit" ng-model="vm.newItem.imageURL"
+                            ng-click="vm.openPicker(images.url)">Upload Image
+                        </md-button>
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button class="md-raised md-accent generalButton userInfoSubmit"
+                            ng-click="vm.addItem(vm.newItem)">Submit
+                        </md-button>
+                    </md-input-container>
+                    <!-- <md-input-container>
+                        <md-button class="md-raised md-warning generalButton userInfoSubmit" ng-click="vm.getCoords()">Get Location
+                        </md-button>
+                    </md-input-container> -->
+                </div>
+        </div>
+    </md-content>
+</div>
+</form>
+</div>
+<div class="grid catchTable table table-hover" layout="horizontal" layout-align="center center" ng-cloak
+    class="md-inline-form" layout-wrap>
+    <table id="catchTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Event City</th>
+                <th>Event State</th>
+                <th>Species</th>
+                <th>Rod</th>
+                <th>Reel</th>
+                <th>Tackle/Bait</th>
+                <!-- <th>Body of Water</th> -->
+                <th>Location Coordinates</th>
+                <th>Image URL</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="items in vm.items.list track by $index">
+            <tr class="catchTableRow">
+                <td>{{items.date | date:'MM-dd-yyyy'}}</td>
+                <td>{{items.event_city}}</td>
+                <td>{{items.event_state}}</td>
+                <td>{{items.species}}</td>
+                <td>{{items.rod}}</td>
+                <td>{{items.reel}}</td>
+                <td>{{items.tackle_bait}}</td>
+                <td>{{items.lat}}, {{items.lon}}
+                    <md-button class="md-raised" ng-click="vm.mapLocation(items)" disabled>View Map</md-button>
+                </td>
+                <td>
+                    <md-button class="md-raised md-accent" ng-click="vm.imageModal(items)">Image</md-button>
+                </td>
+                <td>
+                    <a ng-href="#!editCatch">
+                        <button class="tableEditBtn" aria-label="edit button" ng-click="vm.editCatch({items})">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </a>
+                </td>
+                <td>
+                    <button class="tableDeleteBtn" ng-click="vm.deleteItem(items.eventid)">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
