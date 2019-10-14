@@ -1,0 +1,34 @@
+.fa-icon {
+    margin-right: 10px;
+}
+
+#register-btns {
+    position: relative;
+    left: 100px;
+}
+
+#register-form {
+    width: 500px;
+    border: 2px solid lightgrey;
+    padding: 40px;
+    position: relative;
+    top: 60px;
+}
+
+#register-header {
+    border-bottom: 2px solid lightgrey;
+    width: 456px;
+    font-size: 50px;
+    background-color: #037584;
+    position: relative;
+    bottom: 107px;
+    right: 40px;
+    padding: 20px;
+    text-align: center;
+    height: 130px;
+}
+
+.loginInput {
+    padding: 6px;
+    width: 300px;
+}
