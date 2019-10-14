@@ -20,44 +20,28 @@ router.get('/', (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
-  const username = req.body.username;
+  const name = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const first_name = req.body.first_name;
-  const last_name = req.body.last_name;
-  const city = req.body.city;
-  const state = req.body.state;
+  const email = req.body.email;
 
   var saveUser = {
-    username: req.body.username,
+    name: req.body.username,
     password: encryptLib.encryptPassword(req.body.password),
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    city: req.body.city,
-    state: req.body.state
+    email: req.body.email
   };
   // console.log('new user:', saveUser);
   pool.query(
     `INSERT INTO users
     (username,
       password,
-      first_name,
-      last_name,
-      city,
-      state)
+      email)
       VALUES
-      ($1, $2, $3, $4, $5, $6)
+      ($1, $2, $3)
       RETURNING id`,
-    [
-      saveUser.username,
-      saveUser.password,
-      saveUser.first_name,
-      saveUser.last_name,
-      saveUser.city,
-      saveUser.state
-    ],
+    [saveUser.name, saveUser.password, saveUser.email],
     (err, result) => {
       if (err) {
-        // console.log("Error inserting data: ", err);
+        console.log('Error inserting data: ', err);
         res.sendStatus(500);
       } else {
         res.sendStatus(201);
@@ -305,4 +289,5 @@ router.delete('/deleteItem/:eventid', function(req, res) {
       res.sendStatus(500);
     });
 }); //end delete row
+
 module.exports = router;

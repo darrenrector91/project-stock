@@ -1,0 +1,29 @@
+<body>
+    <div layout="column" layout-align="center center" layout-padding ng-cloak>
+
+        <md-content class="md-no-momentum" class="form-layout" id="register-form">
+            <div id="register-header">
+                <h5>Register</h5>
+            </div>
+            <md-input-container class="md-icon-float md-block">
+                <label><i class="fas fa-user fa-icon"></i>Username</label>
+                <input type="text" ng-model="vm.user.username">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+                <label><i class="fas fa-lock fa-icon"></i></i>Password</label>
+                <input type="password" ng-model="vm.user.password">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+                <label><i class="fas fa-envelope fa-icon"></i></i>Email</label>
+                <input type="email" ng-model="vm.user.email">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block" id="register-btns">
+                <md-button class="md-accent md-raised" ng-click="vm.registerUser(vm.user)">Register</md-button>
+                <md-button class="md-primary" ng-href="#!home">
+                    Cancel
+                </md-button>
+            </md-input-container>
+        </md-content>
+
+    </div>
+</body>
