@@ -22,6 +22,8 @@ myApp.controller('LoginController', [
             if (response.status == 200) {
               console.log('success: ', response.data);
               // location works with SPA (ng-route)
+              console.log($location.path('/user'));
+
               $location.path('/user');
             } else {
               console.log('failure error: ', response);

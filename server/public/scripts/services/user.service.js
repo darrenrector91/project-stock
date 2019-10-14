@@ -3,38 +3,38 @@ myApp.service('UserService', [
   '$location',
   '$mdDialog',
   function($http, $location, $mdDialog) {
-    console.log('UserService Loaded');
+    // console.log('UserService Loaded');
     var self = this;
 
     self.userObject = {};
 
     self.getuser = function() {
-      console.log('UserService -- getuser');
+      // console.log('UserService -- getuser');
       return $http.get('/api/user').then(
         function(response) {
-          if (response.data.name) {
+          if (response.data.username) {
             // user has a current session on the server
-            self.userObject.email = response.data.email;
+            self.userObject.username = response.data.username;
             self.userObject.password = response.data.password;
-            console.log(self.userObject);
-            console.log(
-              'UserService -- getuser -- User Data: ',
-              response.data.id
-            );
+            self.userObject.email = response.data.email;
+            // console.log(
+            //   'UserService -- getuser -- User Data: ',
+            //   response.data.id
+            // );
           } else {
-            console.log('UserService -- getuser -- failure');
+            // console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
             $location.path('/home');
           }
         },
         function(response) {
-          console.log('UserService -- getuser -- failure: ', response);
+          // console.log('UserService -- getuser -- failure: ', response);
           $location.path('/home');
         }
       );
     };
     self.logout = function() {
-      console.log('UserService -- logout');
+      // console.log('UserService -- logout');
       swal({
         text: 'Do you want to log out?',
         icon: 'warning',
@@ -58,16 +58,16 @@ myApp.service('UserService', [
 
     //save catch edit in form and return to user view
     self.saveUserInfo = function(data) {
-      console.log('returned data from updating user: ', self.userObject.name);
+      // console.log('returned data from updating user: ', self.userObject.name);
       return $http
         .put('/api/user/saveUserInfo', data)
         .then(function(response) {
           self.saveUserInfo.item = response.data;
           self.getuser();
-          console.log('response.data: ', response.data);
+          // console.log('response.data: ', response.data);
         })
         .catch(function(error) {
-          console.log('error in save user info: ', error);
+          // console.log('error in save user info: ', error);
         });
     }; //end catch edit in form
   }

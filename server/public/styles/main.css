@@ -32,3 +32,8 @@
     padding: 6px;
     width: 300px;
 }
+
+#welcome-salutation {
+    font-size: 24px;
+    padding: 20px;
+}
