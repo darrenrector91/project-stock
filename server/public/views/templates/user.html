@@ -1,1 +1,92 @@
 <div ng-include="'views/partials/user.header.html'"></div>
+<md-card>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Food Stock</span>
+      <span class="md-subhead">Use the form below to add inventory</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content layout-align="center">
+    <div layout="row" layout-align="center">
+      <md-input-container class="input-wrapper">
+        <md-datepicker ng-model="vm.inventory.current_dt" md-placeholder="Current Date" md-open-on-focus>
+        </md-datepicker>
+      </md-input-container>
+      <md-input-container class="input-wrapper">
+        <label>Category</label>
+        <md-select ng-model="vm.inventory.category">
+          <md-option><em>None</em></md-option>
+          <md-option ng-value="category.name" ng-repeat="category in vm.categories.list">
+            {{ category.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="input-wrapper">
+        <label>Count</label>
+        <input ng-model="vm.inventory.quantity" />
+      </md-input-container>
+      <md-input-container class="input-wrapper">
+        <label>Product Name</label>
+        <input ng-model="vm.inventory.product_name" />
+      </md-input-container>
+    </div>
+    <div layout="row" layout-align="center">
+      <md-input-container class="input-wrapper">
+        <label>Product Size</label>
+        <input ng-model="vm.inventory.product_size" />
+      </md-input-container>
+      <md-input-container class="input-wrapper">
+        <md-datepicker ng-model="vm.inventory.exp_date" md-placeholder="Exp Date" md-open-on-focus>
+        </md-datepicker>
+      </md-input-container>
+      <md-input-container class="input-wrapper">
+        <label>Location</label>
+        <md-select ng-model="vm.inventory.storage_location">
+          <md-option><em>None</em></md-option>
+          <md-option ng-value="location.name" ng-repeat="location in vm.locations.list | filter: searchKeyword ">
+            {{ location.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container>
+        <md-button class="md-raised md-accent" ng-click="vm.addStock(vm.inventory)">Submit</md-button>
+      </md-input-container>
+    </div>
+  </md-card-content>
+</md-card>
+<!-- <div class="container"> -->
+<div class="row" id="searchWrapper">
+  <label id="lbl-table-search">Search: <input id="table-search" ng-model="searchText"></label>
+</div>
+<div grid-data grid-options="gridOptions" grid-actions="gridActions">
+  <table wt-responsive-table id="stock-table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Current Date</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Product Name</th>
+        <th>Product Size</th>
+        <th>Exp Date</th>
+        <th>Storage Location</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="stock in vm.getStock.list | filter: searchText">
+        <td>{{ stock.product_id }}</td>
+        <td>{{ stock.current_dt | date: 'MM/dd/yyyy' }}</td>
+        <td>{{ stock.category }}</td>
+        <td>{{ stock.quantity }}</td>
+        <td>{{ stock.product_name }}</td>
+        <td>{{ stock.product_size }}</td>
+        <td>{{ stock.exp_date | date: 'MM/dd/yyyy' }}</td>
+        <td>{{ stock.storage_location }}</td>
+        <td align="center" id="del-row-btn">
+          <i class="far fa-trash-alt" ng-click="vm.deleteStockRow(stock.product_id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

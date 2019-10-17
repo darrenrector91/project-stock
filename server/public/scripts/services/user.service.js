@@ -6,12 +6,27 @@ myApp.service('UserService', [
     // console.log('UserService Loaded');
     var self = this;
 
+    self.categories = {
+      list: []
+    };
+
+    self.locations = {
+      list: []
+    };
+
+    self.getStock = {
+      list: []
+    };
+
     self.userObject = {};
 
     self.getuser = function() {
       // console.log('UserService -- getuser');
       return $http.get('/api/user').then(
         function(response) {
+          self.getCategories();
+          self.getLocations();
+          self.getStock();
           if (response.data.username) {
             // user has a current session on the server
             self.userObject.username = response.data.username;
@@ -56,19 +71,82 @@ myApp.service('UserService', [
       });
     };
 
-    //save catch edit in form and return to user view
-    self.saveUserInfo = function(data) {
-      // console.log('returned data from updating user: ', self.userObject.name);
+    //save stock
+    self.addStock = function(data) {
+      console.log(data);
       return $http
-        .put('/api/user/saveUserInfo', data)
+        .post('/api/user/addStock', data)
         .then(function(response) {
-          self.saveUserInfo.item = response.data;
-          self.getuser();
-          // console.log('response.data: ', response.data);
+          self.addStock.list = response.data;
+          console.log('response.data: ', response.data);
+          self.getStock();
         })
         .catch(function(error) {
-          // console.log('error in save user info: ', error);
+          console.log('error in save user info: ', error);
         });
     }; //end catch edit in form
+
+    self.getCategories = function() {
+      return $http
+        .get('/api/user/categories')
+        .then(function(response) {
+          // console.log(response);
+          self.categories.list = response.data;
+        })
+        .catch(function(response) {
+          // console.log('error on get request');
+        });
+    };
+
+    self.getLocations = function() {
+      return $http
+        .get('/api/user/locations')
+        .then(function(response) {
+          self.locations.list = response.data;
+        })
+        .catch(function(response) {
+          console.log('error on get request');
+        });
+    };
+
+    self.getStock = function() {
+      return $http
+        .get('/api/user/getStock')
+        .then(function(response) {
+          // console.log(response);
+          self.getStock.list = response.data;
+        })
+        .catch(function(response) {
+          console.log('error on get request');
+        });
+    };
+
+    //Delete item from table/database
+    self.deleteStockRow = function(product_id) {
+      swal({
+        text: 'Are you sure you want to delete the data?',
+        icon: 'warning',
+        buttons: ['No', 'Yes'],
+        dangerMode: true
+      }).then(deleting => {
+        if (deleting) {
+          return $http
+            .delete(`/api/user/deleteStockRow/${product_id}`)
+            .then(function(response) {
+              swal('Data was deleted!');
+              self.getStock();
+            })
+            .catch(function(error) {
+              console.log('deleteStockRow error', error);
+            });
+        } else {
+          swal({
+            text: 'No problem!  The data is safe!!',
+            icon: 'info',
+            timer: 2000
+          });
+        }
+      });
+    };
   }
 ]);

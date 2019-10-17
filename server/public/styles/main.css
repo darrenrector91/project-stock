@@ -37,3 +37,53 @@
     font-size: 24px;
     padding: 20px;
 }
+
+.input-wrapper {
+    margin-right: 25px;
+    width: 190px;
+}
+
+#stock-table {
+    margin: 0 auto;
+    width: 90%;
+}
+
+#stock-table,
+th,
+td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+    color: #000;
+}
+
+#stock-table th {
+    color: #fff;
+    background-color: #374b4e;
+}
+
+#stock-table tr {
+    background-color: #c1bebe;
+}
+
+#del-row-btn {
+    color: firebrick;
+}
+
+#searchWrapper {
+    position: relative;
+    left: 1070px;
+    padding: 10px;
+    color: #000;
+}
+
+#table-search {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #d0d2d2;
+}
+
+#lbl-table-search {
+    font-size: 18px;
+}

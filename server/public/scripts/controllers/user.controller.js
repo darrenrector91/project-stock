@@ -6,11 +6,23 @@ myApp.controller('UserController', [
     self.userService = UserService;
     self.saveUserInfo = UserService.saveUserInfo;
     self.userObject = UserService.userObject;
-    console.log(self.userObject);
+    self.categories = UserService.categories;
+    self.locations = UserService.locations;
+    self.getStock = UserService.getStock;
 
     // saving user data
-    self.saveUserInfo = function(data) {
-      UserService.saveUserInfo(data);
+    // self.saveUserInfo = function(data) {
+    //   UserService.saveUserInfo(data);
+    // };
+
+    self.addStock = function(data) {
+      console.log(data);
+      UserService.addStock(data);
+    };
+
+    self.deleteStockRow = function(product_id) {
+      console.log(product_id);
+      UserService.deleteStockRow(product_id);
     };
   }
 ]);

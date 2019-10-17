@@ -6,7 +6,7 @@ var myApp = angular
       .primaryPalette('lime')
       .warnPalette('red')
       .accentPalette('blue')
-      .backgroundPalette('grey')
+      .backgroundPalette('blue-grey')
       .dark();
   });
 
@@ -30,6 +30,15 @@ myApp.config([
       })
       .when('/user', {
         templateUrl: '/views/templates/user.html',
+        controller: 'UserController as vm',
+        resolve: {
+          getuser: function(UserService) {
+            return UserService.getuser();
+          }
+        }
+      })
+      .when('/expiration-close', {
+        templateUrl: '/views/templates/expiration-close.html',
         controller: 'UserController as vm',
         resolve: {
           getuser: function(UserService) {
