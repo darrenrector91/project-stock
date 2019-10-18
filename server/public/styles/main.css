@@ -1,3 +1,11 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.viewTitle {
+    padding: 10px;
+}
+
 .fa-icon {
     margin-right: 10px;
 }
@@ -70,9 +78,7 @@ td {
     color: firebrick;
 }
 
-#searchWrapper {
-    position: relative;
-    left: 1070px;
+#navWrapper {
     padding: 10px;
     color: #000;
 }
@@ -86,4 +92,56 @@ td {
 
 #lbl-table-search {
     font-size: 18px;
+    float: right;
+    position: relative;
+    right: 70px;
+}
+
+.navBtn {
+    text-decoration: none;
+    color: #fff;
+}
+
+.card-body {
+    background-color: #fff;
+    color: #000;
+    /* border-bottom: 1px solid #adadad; */
+}
+
+.mdCard {
+    width: 32%;
+    float: left;
+}
+
+.card-body span {
+    font-weight: bold;
+}
+
+#addListBtn {
+    border: 2px solid rgb(61, 130, 235);
+    color: #000;
+}
+
+#exp-footer {
+    background-color: #fff;
+}
+
+.fa-space-right {
+    margin-right: 10px;
+}
+
+#throwAwayBtn {
+    border: 2px solid #f44236;
+}
+
+.warning {
+    color: #f44236;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.danger {
+    color: rgb(142, 61, 235);
+    font-weight: bold;
+    ;
 }

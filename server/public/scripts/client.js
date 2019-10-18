@@ -37,8 +37,17 @@ myApp.config([
           }
         }
       })
-      .when('/expiration-close', {
-        templateUrl: '/views/templates/expiration-close.html',
+      .when('/expiring-inventory', {
+        templateUrl: '/views/templates/expiring-inventory.html',
+        controller: 'UserController as vm',
+        resolve: {
+          getuser: function(UserService) {
+            return UserService.getuser();
+          }
+        }
+      })
+      .when('/grocery-list', {
+        templateUrl: '/views/templates/grocery-list.html',
         controller: 'UserController as vm',
         resolve: {
           getuser: function(UserService) {

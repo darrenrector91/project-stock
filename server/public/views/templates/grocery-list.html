@@ -1,0 +1,6 @@
+<div ng-include="'views/partials/user.header.html'"></div>
+<h1 class="viewTitle">Grocery List</h1>
+<md-list-item ng-repeat="list in vm.groceryList">
+    <p> {{ list.size }}{{list.product}}</p>
+    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+</md-list-item>

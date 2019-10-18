@@ -3,7 +3,7 @@ myApp.controller('LoginController', [
   '$location',
   'UserService',
   function($http, $location, UserService) {
-    console.log('LoginController created');
+    // console.log('LoginController created');
     var self = this;
     self.user = {
       name: '',

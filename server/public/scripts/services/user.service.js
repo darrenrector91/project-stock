@@ -18,6 +18,14 @@ myApp.service('UserService', [
       list: []
     };
 
+    self.expiringStock = {
+      list: []
+    };
+
+    self.groceries = {
+      list: []
+    };
+
     self.userObject = {};
 
     self.getuser = function() {
@@ -27,6 +35,7 @@ myApp.service('UserService', [
           self.getCategories();
           self.getLocations();
           self.getStock();
+          self.getExpiringInventory();
           if (response.data.username) {
             // user has a current session on the server
             self.userObject.username = response.data.username;
@@ -86,6 +95,19 @@ myApp.service('UserService', [
         });
     }; //end catch edit in form
 
+    self.groceryList = function(listItem) {
+      console.log(listItem);
+      return $http
+        .post('/api/user/groceryList', listItem)
+        .then(function(response) {
+          self.groceries.list = response.data;
+          console.log('response.data: ', response.data);
+        })
+        .catch(function(error) {
+          console.log('error in save user info: ', error);
+        });
+    };
+
     self.getCategories = function() {
       return $http
         .get('/api/user/categories')
@@ -115,6 +137,18 @@ myApp.service('UserService', [
         .then(function(response) {
           // console.log(response);
           self.getStock.list = response.data;
+        })
+        .catch(function(response) {
+          console.log('error on get request');
+        });
+    };
+
+    self.getExpiringInventory = function() {
+      return $http
+        .get('/api/user/getExpiringInventory')
+        .then(function(response) {
+          // console.log(response);
+          self.expiringStock.list = response.data;
         })
         .catch(function(response) {
           console.log('error on get request');

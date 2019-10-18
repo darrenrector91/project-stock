@@ -29,7 +29,6 @@ router.post('/register', (req, res, next) => {
     password: encryptLib.encryptPassword(req.body.password),
     email: req.body.email
   };
-  // console.log('new user:', saveUser);
   pool.query(
     `INSERT INTO users
     (username,
@@ -73,7 +72,6 @@ router.get('/categories', (req, res) => {
       .query(queryText)
       // runs on successful query
       .then(result => {
-        console.log('query results', result);
         res.send(result.rows);
       })
       // error handling
@@ -129,8 +127,28 @@ router.get('/getStock', (req, res) => {
   }
 });
 
+router.get('/getExpiringInventory', (req, res) => {
+  // query DB
+  if (req.isAuthenticated()) {
+    const queryText = `SELECT * from stock WHERE exp_date < now();`;
+    pool
+      .query(queryText)
+      // runs on successful query
+      .then(result => {
+        res.send(result.rows);
+      })
+      // error handling
+      .catch(err => {
+        console.log('error making select query:', err);
+        res.sendStatus(500);
+      });
+  } else {
+    // failure best handled on the server. do redirect here.
+    res.sendStatus(403);
+  }
+});
+
 router.post('/addStock', function(req, res) {
-  console.log('in POST router');
   if (req.isAuthenticated()) {
     //add stock to stock table
     const queryText = `INSERT INTO stock
@@ -155,10 +173,9 @@ router.post('/addStock', function(req, res) {
         req.user.id
       ])
       .then(result => {
-        console.log('result:', result);
         res.send(result);
       })
-      // erorr handling
+      // error handling
       .catch(err => {
         console.log('error:', err);
         res.sendStatus(500);
@@ -169,17 +186,33 @@ router.post('/addStock', function(req, res) {
   }
 });
 
-/* ***************************
-*******DELETE CATCH ROW*******
-******************************
-delete table/database row */
+//$%^&*#@@@Grocery list POST not working
+router.post('/groceryList', function(req, res) {
+  if (req.isAuthenticated()) {
+    //add stock to stock table
+    const queryText = `INSERT INTO stock (userid, product_name) VALUES ($1, $2)`;
+    pool
+      .query(queryText)
+      .then(result => {
+        console.log(result);
+        res.send(result);
+      })
+      // error handling
+      .catch(err => {
+        console.log('error:', err);
+        res.sendStatus(500);
+      });
+  } else {
+    // failure best handled on the server. do redirect here.
+    res.sendStatus(403);
+  }
+});
+
 router.delete('/deleteStockRow/:product_id', function(req, res) {
-  console.log('in router.delete');
   const queryText = 'DELETE FROM stock WHERE product_id = $1';
   pool
     .query(queryText, [req.params.product_id])
     .then(result => {
-      console.log('result:', result.rows);
       res.sendStatus(200);
     })
     .catch(err => {

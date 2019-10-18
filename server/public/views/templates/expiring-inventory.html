@@ -1,0 +1,30 @@
+<div ng-include="'views/partials/inventory.header.html'"></div>
+<h1 class="viewTitle">Expiring Inventory</h1>
+<div class="row">
+    <md-card class="mdCard" ng-repeat="exp in vm.expiringStock.list">
+        <md-card-header>
+            <md-card-header-text>
+                <span class="md-title">{{exp.product_name}}</span>
+                <span class="md-sub-title">{{exp.product_size}}</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content class="card-body">
+            <p ng-class="{'warning': vm.isWarning}">Expiration
+                date: {{vm.checkDate(exp.exp_date | date: 'MM/dd/yyyy')}}{{exp.exp_date | date: 'MM/dd/yyyy'}}
+            </p>
+            <p><span>Storage location: </span>{{exp.storage_location}}</p>
+        </md-card-content>
+        <md-divider></md-divider>
+        <md-card-footer id="exp-footer">
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <md-button id="addListBtn" class="md-raised"
+                    ng-click="vm.groceryList(exp.product_name,exp.product_size)">
+                    <i class="fas fa-plus-circle fa-space-right mainBlue"></i>Add to List
+                </md-button>
+                <md-button id="throwAwayBtn" class="md-raised" ng-click="">
+                    <i class="far fa-trash-alt fa-space-right mainRed"></i>Throw away
+                </md-button>
+            </section>
+        </md-card-footer>
+    </md-card>
+</div>

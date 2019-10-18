@@ -5,7 +5,6 @@ const dotenv = require('dotenv').config();
 const passport = require('./strategies/sql.localstrategy');
 const sessionConfig = require('./modules/session-middleware');
 const PORT = process.env.PORT || 5000;
-
 // Route includes
 const userRouter = require('./routes/user.router');
 

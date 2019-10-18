@@ -1,0 +1,18 @@
+<div class="header">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools loginHeader">
+            <h1 class="md-truncate flex bannerTitle">
+                Food Stock
+            </h1>
+            <h3 id="welcome-salutation">Welcome, {{vm.userObject.username}}!</h3>
+            <md-button class="md-raised md-accent">
+                <a href="#!grocery-list" class="navBtn">Grocery List</a>
+            </md-button>
+            <md-button class="md-raised md-accent">
+                <a href="#!user" class="navBtn">Inventory</a>
+            </md-button>
+            <md-button class="md-raised md-accent " ng-click="vm.userService.logout()">Log Out
+            </md-button>
+        </div>
+    </md-toolbar>
+</div>
