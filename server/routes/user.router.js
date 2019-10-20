@@ -148,6 +148,27 @@ router.get('/getExpiringInventory', (req, res) => {
   }
 });
 
+router.get('/grocerylist', (req, res) => {
+  // query DB
+  if (req.isAuthenticated()) {
+    const queryText = `SELECT * FROM grocerylist;`;
+    pool
+      .query(queryText)
+      // runs on successful query
+      .then(result => {
+        res.send(result.rows);
+      })
+      // error handling
+      .catch(err => {
+        console.log('error making select query:', err);
+        res.sendStatus(500);
+      });
+  } else {
+    // failure best handled on the server. do redirect here.
+    res.sendStatus(403);
+  }
+});
+
 router.post('/addStock', function(req, res) {
   if (req.isAuthenticated()) {
     //add stock to stock table
@@ -186,15 +207,26 @@ router.post('/addStock', function(req, res) {
   }
 });
 
-//$%^&*#@@@Grocery list POST not working
-router.post('/groceryList', function(req, res) {
+//$%^&*#@@@Grocery list POST not working - Use product_id
+router.post('/grocerylist', function(req, res) {
+  console.log(req.body);
+
   if (req.isAuthenticated()) {
     //add stock to stock table
-    const queryText = `INSERT INTO stock (userid, product_name) VALUES ($1, $2)`;
+    const queryText = `INSERT INTO grocerylist
+    (userid,
+      product_name,
+      product_id,
+      category) 
+      VALUES ($1, $2, $3, $4)`;
     pool
-      .query(queryText)
+      .query(queryText, [
+        req.user.id,
+        req.body.product_name,
+        req.body.product_id,
+        req.body.category
+      ])
       .then(result => {
-        console.log(result);
         res.send(result);
       })
       // error handling
@@ -208,6 +240,20 @@ router.post('/groceryList', function(req, res) {
   }
 });
 
+router.delete('/groceryListDelete/:product_id', function(req, res) {
+  console.log(req);
+  const queryText = 'DELETE FROM grocerylist WHERE product_id = $1';
+  pool
+    .query(queryText, [req.params.product_id])
+    .then(result => {
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log('error:', err);
+      res.sendStatus(500);
+    });
+});
+
 router.delete('/deleteStockRow/:product_id', function(req, res) {
   const queryText = 'DELETE FROM stock WHERE product_id = $1';
   pool
@@ -219,6 +265,19 @@ router.delete('/deleteStockRow/:product_id', function(req, res) {
       console.log('error:', err);
       res.sendStatus(500);
     });
-}); //end delete row
+});
+
+router.delete('/deleteExpiredInventory/:product_id', function(req, res) {
+  const queryText = 'DELETE FROM stock WHERE product_id = $1';
+  pool
+    .query(queryText, [req.params.product_id])
+    .then(result => {
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log('error:', err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

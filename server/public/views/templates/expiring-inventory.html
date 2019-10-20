@@ -17,12 +17,11 @@
         <md-divider></md-divider>
         <md-card-footer id="exp-footer">
             <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-                <md-button id="addListBtn" class="md-raised"
-                    ng-click="vm.groceryList(exp.product_name,exp.product_size)">
+                <md-button id="addListBtn" class="md-raised" ng-click="vm.groceryList(exp)">
                     <i class="fas fa-plus-circle fa-space-right mainBlue"></i>Add to List
                 </md-button>
-                <md-button id="throwAwayBtn" class="md-raised" ng-click="">
-                    <i class="far fa-trash-alt fa-space-right mainRed"></i>Throw away
+                <md-button id="throwAwayBtn" class="md-raised" ng-click="vm.deleteExpiredInventory(exp.product_id)">
+                    <i class="far fa-trash-alt fa-space-right mainRed"></i>Remove
                 </md-button>
             </section>
         </md-card-footer>

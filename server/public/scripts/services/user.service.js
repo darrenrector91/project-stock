@@ -26,6 +26,10 @@ myApp.service('UserService', [
       list: []
     };
 
+    self.getGroceryList = {
+      list: []
+    };
+
     self.userObject = {};
 
     self.getuser = function() {
@@ -36,6 +40,7 @@ myApp.service('UserService', [
           self.getLocations();
           self.getStock();
           self.getExpiringInventory();
+          self.getGroceryList();
           if (response.data.username) {
             // user has a current session on the server
             self.userObject.username = response.data.username;
@@ -95,16 +100,27 @@ myApp.service('UserService', [
         });
     }; //end catch edit in form
 
-    self.groceryList = function(listItem) {
-      console.log(listItem);
+    self.groceryList = function(data) {
+      // console.log(data);
       return $http
-        .post('/api/user/groceryList', listItem)
+        .post('/api/user/grocerylist', data)
         .then(function(response) {
           self.groceries.list = response.data;
-          console.log('response.data: ', response.data);
         })
         .catch(function(error) {
-          console.log('error in save user info: ', error);
+          console.log('error adding to grocery list: ', error);
+        });
+    };
+
+    self.removeFromInventory = function(data) {
+      console.log(data);
+      return $http
+        .delete(`/api/user/deleteStockRow/${product_id}`)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log('Unable to remove stock from inventory', error);
         });
     };
 
@@ -155,6 +171,18 @@ myApp.service('UserService', [
         });
     };
 
+    self.getGroceryList = function() {
+      return $http
+        .get('/api/user/grocerylist')
+        .then(function(response) {
+          // console.log(response);
+          self.getGroceryList.list = response.data;
+        })
+        .catch(function(response) {
+          console.log('error on get request');
+        });
+    };
+
     //Delete item from table/database
     self.deleteStockRow = function(product_id) {
       swal({
@@ -169,6 +197,48 @@ myApp.service('UserService', [
             .then(function(response) {
               swal('Data was deleted!');
               self.getStock();
+            })
+            .catch(function(error) {
+              console.log('deleteStockRow error', error);
+            });
+        } else {
+          swal({
+            text: 'No problem!  The data is safe!!',
+            icon: 'info',
+            timer: 2000
+          });
+        }
+      });
+    };
+
+    self.groceryListDelete = function(product_id) {
+      console.log(product_id);
+      return $http
+        .delete(`/api/user/groceryListDelete/${product_id}`)
+        .then(function(response) {
+          console.log(response);
+          self.getGroceryList();
+        })
+        .catch(function(error) {
+          console.log('Unable to remove stock from inventory', error);
+        });
+    };
+
+    //Delete item from table/database
+    self.deleteExpiredInventory = function(product_id) {
+      // console.log(product_id);
+      swal({
+        text: 'Are you sure you want to delete the data?',
+        icon: 'warning',
+        buttons: ['No', 'Yes'],
+        dangerMode: true
+      }).then(deleting => {
+        if (deleting) {
+          return $http
+            .delete(`/api/user/deleteStockRow/${product_id}`)
+            .then(function(response) {
+              swal('Data was deleted!');
+              self.getExpiringInventory();
             })
             .catch(function(error) {
               console.log('deleteStockRow error', error);

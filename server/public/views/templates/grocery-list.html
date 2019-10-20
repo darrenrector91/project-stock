@@ -1,6 +1,9 @@
-<div ng-include="'views/partials/user.header.html'"></div>
+<div ng-include="'views/partials/groceryList.header.html'"></div>
 <h1 class="viewTitle">Grocery List</h1>
-<md-list-item ng-repeat="list in vm.groceryList">
-    <p> {{ list.size }}{{list.product}}</p>
-    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+<md-list-item ng-repeat="list in vm.getGroceryList.list" id="groceryList">
+    <p> {{list.product_name}}</p>
+    <md-button><i class="fas fa-times" id="btnGroceryListRemove" ng-click="vm.groceryListDelete(list.product_id)"
+            aria-label="delete button"></i></md-button>
+    <!-- <md-checkbox class="md-secondary" ng-model="groceryList.item" ng-true-value="'YES'" ng-false-value="'NO'">
+    </md-checkbox> -->
 </md-list-item>

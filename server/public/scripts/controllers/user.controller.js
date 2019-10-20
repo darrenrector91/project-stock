@@ -11,6 +11,7 @@ myApp.controller('UserController', [
     self.locations = UserService.locations;
     self.getStock = UserService.getStock;
     self.expiringStock = UserService.expiringStock;
+    self.getGroceryList = UserService.getGroceryList;
 
     self.addStock = function(data) {
       UserService.addStock(data);
@@ -20,9 +21,18 @@ myApp.controller('UserController', [
       UserService.deleteStockRow(product_id);
     };
 
-    self.groceryList = function(product) {
-      console.log(product);
-      UserService.groceryList(product);
+    self.deleteExpiredInventory = function(product_id) {
+      // console.log(product_id);
+      UserService.deleteExpiredInventory(product_id);
+    };
+
+    self.groceryList = function(data) {
+      UserService.groceryList(data);
+    };
+
+    self.groceryListDelete = function(data) {
+      console.log(data);
+      UserService.groceryListDelete(data);
     };
 
     self.checkDate = function(date) {

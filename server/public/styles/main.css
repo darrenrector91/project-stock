@@ -103,7 +103,7 @@ td {
 }
 
 .card-body {
-    background-color: #fff;
+    background-color: #dcdcdc;
     color: #000;
     /* border-bottom: 1px solid #adadad; */
 }
@@ -132,6 +132,7 @@ td {
 
 #throwAwayBtn {
     border: 2px solid #f44236;
+    width: 130px;
 }
 
 .warning {
@@ -144,4 +145,26 @@ td {
     color: rgb(142, 61, 235);
     font-weight: bold;
     ;
+}
+
+#grocery-basket {
+    width: 40px;
+}
+
+.bannerTitle {
+    margin-left: 10px !important;
+}
+
+#groceryList {
+    width: 310px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+#btnGroceryListRemove {
+    color: #ad1309;
+    font-size: 20px;
+    position: relative;
+    top: 5px;
 }
