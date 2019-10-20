@@ -22,7 +22,6 @@ myApp.controller('UserController', [
     };
 
     self.deleteExpiredInventory = function(product_id) {
-      // console.log(product_id);
       UserService.deleteExpiredInventory(product_id);
     };
 
@@ -31,7 +30,6 @@ myApp.controller('UserController', [
     };
 
     self.groceryListDelete = function(data) {
-      console.log(data);
       UserService.groceryListDelete(data);
     };
 

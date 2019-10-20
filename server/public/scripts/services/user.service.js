@@ -211,12 +211,11 @@ myApp.service('UserService', [
       });
     };
 
+    // Delete from grocery list
     self.groceryListDelete = function(product_id) {
-      console.log(product_id);
       return $http
         .delete(`/api/user/groceryListDelete/${product_id}`)
         .then(function(response) {
-          console.log(response);
           self.getGroceryList();
         })
         .catch(function(error) {
@@ -224,9 +223,8 @@ myApp.service('UserService', [
         });
     };
 
-    //Delete item from table/database
+    //Delete item from inventory table
     self.deleteExpiredInventory = function(product_id) {
-      // console.log(product_id);
       swal({
         text: 'Are you sure you want to delete the data?',
         icon: 'warning',
