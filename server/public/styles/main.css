@@ -97,6 +97,14 @@ td {
     right: 70px;
 }
 
+#expiredOnlyBtn {
+    position: relative;
+    left: 740px;
+    background-color: transparent;
+    color: #fff;
+    border: 3px solid rgb(33, 150, 243);
+}
+
 .navBtn {
     text-decoration: none;
     color: #fff;

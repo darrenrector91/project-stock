@@ -17,20 +17,20 @@ myApp.controller('UserController', [
       UserService.addStock(data);
     };
 
-    self.deleteStockRow = function(product_id) {
-      UserService.deleteStockRow(product_id);
-    };
-
     self.deleteExpiredInventory = function(product_id) {
+      console.log(product_id);
       UserService.deleteExpiredInventory(product_id);
     };
 
     self.groceryList = function(data) {
+      console.log(data);
       UserService.groceryList(data);
+      let product_id = data.product_id;
+      self.deleteItem(product_id);
     };
 
-    self.groceryListDelete = function(data) {
-      UserService.groceryListDelete(data);
+    self.showExpiredOnly = function() {
+      UserService.showExpiredOnly();
     };
 
     self.checkDate = function(date) {
@@ -57,6 +57,16 @@ myApp.controller('UserController', [
       } else {
         self.isWarning = false;
       }
+    };
+
+    self.deleteItem = function(product_id) {
+      console.log(product_id);
+      UserService.deleteItem(product_id);
+    };
+
+    self.deleteItemGroceryList = function(product_id) {
+      console.log(product_id);
+      UserService.deleteItemGroceryList(product_id);
     };
   }
 ]);

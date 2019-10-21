@@ -57,8 +57,10 @@
 <!-- <div class="container"> -->
 <div class="row" id="navWrapper">
   <md-button class="md-raised md-accent">
-    <a href="#!expiring-inventory" class="navBtn">Exp Inventory</a>
+    <a href="#!expiring-inventory" class="navBtn">Expiring Inventory</a>
   </md-button>
+  <!-- <md-button class="md-raised md-accent navBtn" id="expiredOnlyBtn" ng-click="vm.showExpiredOnly()">Expired Only
+  </md-button> -->
   <label id="lbl-table-search">Search: <input id="table-search" ng-model="searchText"></label>
 </div>
 <div grid-data grid-options="gridOptions" grid-actions="gridActions">
@@ -87,7 +89,7 @@
         <td>{{ stock.exp_date | date: 'MM/dd/yyyy' }}</td>
         <td>{{ stock.storage_location }}</td>
         <td align="center" id="del-row-btn">
-          <i class="far fa-trash-alt" ng-click="vm.deleteStockRow(stock.product_id)"></i>
+          <i class="far fa-trash-alt" ng-click="vm.deleteItem(stock.product_id)"></i>
         </td>
       </tr>
     </tbody>

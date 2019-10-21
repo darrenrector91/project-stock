@@ -87,12 +87,12 @@ myApp.service('UserService', [
 
     //save stock
     self.addStock = function(data) {
-      console.log(data);
+      // console.log(data);
       return $http
         .post('/api/user/addStock', data)
         .then(function(response) {
           self.addStock.list = response.data;
-          console.log('response.data: ', response.data);
+          // console.log('response.data: ', response.data);
           self.getStock();
         })
         .catch(function(error) {
@@ -106,21 +106,10 @@ myApp.service('UserService', [
         .post('/api/user/grocerylist', data)
         .then(function(response) {
           self.groceries.list = response.data;
+          // self.removeFromInventory(data);
         })
         .catch(function(error) {
           console.log('error adding to grocery list: ', error);
-        });
-    };
-
-    self.removeFromInventory = function(data) {
-      console.log(data);
-      return $http
-        .delete(`/api/user/deleteStockRow/${product_id}`)
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log('Unable to remove stock from inventory', error);
         });
     };
 
@@ -184,71 +173,59 @@ myApp.service('UserService', [
     };
 
     //Delete item from table/database
-    self.deleteStockRow = function(product_id) {
-      swal({
-        text: 'Are you sure you want to delete the data?',
-        icon: 'warning',
-        buttons: ['No', 'Yes'],
-        dangerMode: true
-      }).then(deleting => {
-        if (deleting) {
-          return $http
-            .delete(`/api/user/deleteStockRow/${product_id}`)
-            .then(function(response) {
-              swal('Data was deleted!');
-              self.getStock();
-            })
-            .catch(function(error) {
-              console.log('deleteStockRow error', error);
-            });
-        } else {
-          swal({
-            text: 'No problem!  The data is safe!!',
-            icon: 'info',
-            timer: 2000
-          });
-        }
-      });
-    };
+    // self.deleteItem = function(product_id) {
+    //   swal({
+    //     text: 'Are you sure you want to delete the data?',
+    //     icon: 'warning',
+    //     buttons: ['No', 'Yes'],
+    //     dangerMode: true
+    //   }).then(deleting => {
+    //     if (deleting) {
+    //       return $http
+    //         .delete(`/api/user/deleteItem/${product_id}`)
+    //         .then(function(response) {
+    //           swal('Data was deleted!');
+    //           self.getStock();
+    //           self.getExpiringInventory();
+    //         })
+    //         .catch(function(error) {
+    //           console.log('deleteItem error', error);
+    //         });
+    //     } else {
+    //       swal({
+    //         text: 'No problem!  The data is safe!!',
+    //         icon: 'info',
+    //         timer: 2000
+    //       });
+    //     }
+    //   });
+    // };
 
-    // Delete from grocery list
-    self.groceryListDelete = function(product_id) {
+    self.deleteItem = function(product_id) {
+      console.log(product_id);
       return $http
-        .delete(`/api/user/groceryListDelete/${product_id}`)
+        .delete(`/api/user/deleteItem/${product_id}`)
         .then(function(response) {
+          self.getStock();
+          self.getExpiringInventory();
           self.getGroceryList();
         })
         .catch(function(error) {
-          console.log('Unable to remove stock from inventory', error);
+          console.log('deleteItem error', error);
         });
     };
 
-    //Delete item from inventory table
-    self.deleteExpiredInventory = function(product_id) {
-      swal({
-        text: 'Are you sure you want to delete the data?',
-        icon: 'warning',
-        buttons: ['No', 'Yes'],
-        dangerMode: true
-      }).then(deleting => {
-        if (deleting) {
-          return $http
-            .delete(`/api/user/deleteStockRow/${product_id}`)
-            .then(function(response) {
-              swal('Data was deleted!');
-              self.getExpiringInventory();
-            })
-            .catch(function(error) {
-              console.log('deleteStockRow error', error);
-            });
-        } else {
-          swal({
-            text: 'No problem!  The data is safe!!',
-            icon: 'info',
-            timer: 2000
-          });
-        }
-      });
+    self.deleteItemGroceryList = function(product_id) {
+      console.log(product_id);
+      return $http
+        .delete(`/api/user/deleteItemGroceryList/${product_id}`)
+        .then(function(response) {
+          self.getStock();
+          self.getExpiringInventory();
+        })
+        .catch(function(error) {
+          console.log('deleteItemGroceryList error', error);
+        });
     };
   }
 ]);
