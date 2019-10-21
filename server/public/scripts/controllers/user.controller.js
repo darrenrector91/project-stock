@@ -23,7 +23,7 @@ myApp.controller('UserController', [
     };
 
     self.groceryList = function(data) {
-      console.log(data);
+      // console.log(data);
       UserService.groceryList(data);
       let product_id = data.product_id;
       self.deleteItem(product_id);
@@ -60,12 +60,12 @@ myApp.controller('UserController', [
     };
 
     self.deleteItem = function(product_id) {
-      console.log(product_id);
+      // console.log(product_id);
       UserService.deleteItem(product_id);
     };
 
     self.deleteItemGroceryList = function(product_id) {
-      console.log(product_id);
+      // console.log(product_id);
       UserService.deleteItemGroceryList(product_id);
     };
   }
