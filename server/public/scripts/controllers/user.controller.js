@@ -18,12 +18,12 @@ myApp.controller('UserController', [
     };
 
     self.deleteExpiredInventory = function(product_id) {
-      console.log(product_id);
       UserService.deleteExpiredInventory(product_id);
     };
 
     self.groceryList = function(data) {
-      // console.log(data);
+      let product_name = data.product_name;
+      console.log(product_name);
       UserService.groceryList(data);
       let product_id = data.product_id;
       self.deleteItem(product_id);
@@ -31,6 +31,10 @@ myApp.controller('UserController', [
 
     self.showExpiredOnly = function() {
       UserService.showExpiredOnly();
+    };
+
+    self.addToGroceryList = function(product_name) {
+      UserService.addToGroceryList(product_name);
     };
 
     self.checkDate = function(date) {
@@ -60,13 +64,25 @@ myApp.controller('UserController', [
     };
 
     self.deleteItem = function(product_id) {
-      // console.log(product_id);
       UserService.deleteItem(product_id);
     };
 
     self.deleteItemGroceryList = function(product_id) {
-      // console.log(product_id);
       UserService.deleteItemGroceryList(product_id);
+    };
+
+    self.inputs = {
+      input1: 1
+    };
+    self.items = [{ name: 'input1' }];
+
+    self.add = function() {
+      console.log('in fn');
+
+      var itemNumber = self.items.length + 1;
+      var inputName = 'input' + itemNumber;
+      self.items.push({ name: inputName });
+      self.inputs[inputName] = itemNumber;
     };
   }
 ]);

@@ -176,3 +176,43 @@ td {
     position: relative;
     top: 5px;
 }
+
+#groceryListForm {
+    color: #000 !important;
+}
+
+#blankInputBtn {
+    position: relative;
+    right: 30px;
+    top: 3px;
+    font-size: 20px;
+}
+
+li {
+    list-style: none;
+}
+
+#blankInpt {
+    margin-bottom: 10px;
+}
+
+
+li {
+    list-style: none;
+    padding: 10px;
+}
+
+.procedure-details {
+    max-height: 100px;
+    transition: .8s;
+    overflow: hidden;
+}
+
+.procedure-details.hidden {
+    max-height: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}

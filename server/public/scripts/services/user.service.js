@@ -172,32 +172,95 @@ myApp.service('UserService', [
         });
     };
 
+    self.addToGroceryList = function(product_name) {
+      console.log(product_name);
+    };
+
     self.deleteItem = function(product_id) {
-      // console.log(product_id);
-      return $http
-        .delete(`/api/user/deleteItem/${product_id}`)
-        .then(function(response) {
-          self.getStock();
-          self.getExpiringInventory();
-          self.getGroceryList();
-        })
-        .catch(function(error) {
-          console.log('deleteItem error', error);
-        });
+      swal({
+        text: 'Are you sure you want to delete this Catch Data?',
+        icon: 'warning',
+        buttons: ['No', 'Yes'],
+        dangerMode: true
+      }).then(deleting => {
+        if (deleting) {
+          return $http
+            .delete(`/api/user/deleteItem/${product_id}`)
+            .then(function(response) {
+              swal('Catch data was deleted!');
+              self.getStock();
+              self.getExpiringInventory();
+              self.getGroceryList();
+            })
+            .catch(function(error) {
+              console.log('deleteItem error', error);
+            });
+        } else {
+          swal({
+            text: 'No problem!  The data is safe!!',
+            icon: 'info',
+            timer: 2000
+          });
+        }
+      });
+    };
+
+    self.deleteItem = function(eventid) {
+      swal({
+        title: 'Do you want to delete the item?',
+        text: 'You will not be able to revert this!',
+        icon: 'error',
+        buttons: ['No', 'Yes'],
+        dangerMode: true
+      }).then(deleting => {
+        if (deleting) {
+          return $http
+            .delete(`/api/user/deleteItem/${eventid}`)
+            .then(function(response) {
+              swal('Item deleted!');
+              self.getCatch();
+            })
+            .catch(function(error) {
+              // console.log('deleteItem error', error);
+            });
+        } else {
+          swal({
+            text: 'No problem!  The data is safe!!',
+            icon: 'info',
+            timer: 2000
+          });
+        }
+      });
     };
 
     self.deleteItemGroceryList = function(product_id) {
-      console.log(product_id);
-      return $http
-        .delete(`/api/user/deleteItemGroceryList/${product_id}`)
-        .then(function(response) {
-          self.getStock();
-          self.getExpiringInventory();
-          self.getGroceryList();
-        })
-        .catch(function(error) {
-          console.log('deleteItemGroceryList error', error);
-        });
+      // console.log(product_id);
+      swal({
+        text: 'Are you sure you want to delete this grocery item?',
+        icon: 'warning',
+        buttons: ['No', 'Yes'],
+        dangerMode: true
+      }).then(deleting => {
+        if (deleting) {
+          return $http
+            .delete(`/api/user/deleteItemGroceryList/${product_id}`)
+            .then(function(response) {
+              swal('Grocery item deleted!');
+              self.getStock();
+              self.getExpiringInventory();
+              self.getGroceryList();
+            })
+            .catch(function(error) {
+              console.log('deleteItemGroceryList error', error);
+            });
+        } else {
+          swal({
+            text: 'No problem!  The data is safe!!',
+            icon: 'info',
+            timer: 2000
+          });
+        }
+      });
     };
   }
 ]);

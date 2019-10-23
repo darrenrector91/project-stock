@@ -1,8 +1,17 @@
 <div ng-include="'views/partials/groceryList.header.html'"></div>
 <h1 class="viewTitle">Grocery List</h1>
 <md-list-item ng-repeat="list in vm.getGroceryList.list" id="groceryList">
-    <p>{{list.product_name}}</p>
-    <md-button><i class="fas fa-times" id="btnGroceryListRemove" ng-click="vm.deleteItemGroceryList(list.product_id)"
-            aria-label="delete button"></i></md-button>
+  <p>{{ list.product_name }}</p>
 </md-list-item>
-<!-- {{vm.getGroceryList.list}} -->
+<md-list-item>
+  <md-input-container>
+    <!-- <label>Color</label> -->
+    <input
+      type="text"
+      style="color: rgb(77, 77, 77);font-weight: bold;"
+      ng-model="blankInput"
+      placeholder="Add additional items"
+    />
+    <md-button ng-click="writeInItem()"></md-button>
+  </md-input-container>
+</md-list-item>
